@@ -18,7 +18,7 @@ public class UserInterface
         System.out.println("-".repeat(50));
         System.out.println("-".repeat(50));
         System.out.println();
-        System.out.println("Welcome To  Bay-z Deli sandwiches ");
+        System.out.println("Welcome To GRAND DELI sandwiches ");
         System.out.println();
         System.out.println("Would you like to:");
         System.out.println();
@@ -62,13 +62,33 @@ public class UserInterface
 
     public int addSandwich()
     {
-
-        System.out.println("-".repeat(50));
+        System.out.println();
+        System.out.println("-".repeat(70));
+        System.out.println();
+        System.out.println("Sandwich Menu: ");
+        System.out.println();
+        System.out.println("*".repeat(70));
+        System.out.println("Sandwich Size Available:");
+        System.out.println();
+        System.out.println(" Small 4''    $5.50  || Medium 8''    $7.00  || Large 12''   $8.50 ");
+        System.out.println();
+        System.out.println("Meat Prices:");
+        System.out.println(" 4' inch       $1.00  || 8' inch      $2.00  || 12' inch     $3.00 ");
+        System.out.println();
+        System.out.println("Extra Meat Price:");
+        System.out.println(" 4' inch       $.50   || 8' inch      $1.00  || 12' inch     $1.50 ");
+        System.out.println();
+        System.out.println("Cheese Price:");
+        System.out.println(" 4' inch        $.75  || 8' inch      $1.50  || 12' inch     $2.25 ");
+        System.out.println();
+        System.out.println("Extra Cheese Price:");
+        System.out.println(" 4' inch         $.30 || 8' inch       $.60  || 12' inch     $.90  ");
+        System.out.println("*".repeat(70));
         System.out.println();
         System.out.println("What size would you like you Sandwich?");
-        System.out.println(" [1] Small 4''");
-        System.out.println(" [2] Medium 8''");
-        System.out.println(" [3] Large 12''");
+        System.out.println(" [1] Small 4''     ");
+        System.out.println(" [2] Medium 8''    ");
+        System.out.println(" [3] Large 12''    ");
         System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
     }
@@ -76,31 +96,63 @@ public class UserInterface
     public int drinks()
     {
         System.out.println();
+        System.out.println();
         System.out.println("-".repeat(50));
         System.out.println("Drinks Menu");
-        System.out.println("[1] Small");
-        System.out.println("[2] Medium");
-        System.out.println("[3] Large");
+        System.out.println("[1] Small     $2.00 ");
+        System.out.println("[2] Medium    $2.50 ");
+        System.out.println("[3] Large     $3.00 ");
         System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
 
     }
 
-    public int chips()
+    public int drinkType()
     {
         System.out.println();
+        System.out.println();
         System.out.println("-".repeat(50));
-        System.out.println("Chips Menu");
-        System.out.println("[1] yes");
-        System.out.println("[2] no");
+        System.out.println("Drinks Menu");
+        System.out.println(" [1] Coke ");
+        System.out.println(" [2] Sprite ");
+        System.out.println(" [3] Dr Pepper ");
+        System.out.println(" [4] Fanta ");
+        System.out.println(" [5] Vitamin Water");
+        System.out.println(" [6] Water ");
+
         System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
+
+
+    }
+
+
+
+
+    public int ChipType()
+    {
+        System.out.println();
+        System.out.println();
+        System.out.println("-".repeat(50));
+        System.out.println();
+        System.out.println( " Chips      $1.50 each");
+        System.out.println();
+        System.out.println(" [1] Lays");
+        System.out.println(" [2] Doritos ");
+        System.out.println(" [3] Cheetos");
+        System.out.println(" [4] Lays Baked");
+        System.out.println(" [5] Sun Chips ");
+        System.out.println(" [6] Ruffles ");
+        System.out.println("-".repeat(50));
+        return Integer.parseInt(scanner.nextLine().strip());
+
 
     }
 
     public int checkOut()
     {
+        System.out.println();
         System.out.println();
         System.out.println("-".repeat(50));
         System.out.println(" [1] Confirm");
@@ -114,6 +166,7 @@ public class UserInterface
     public int sandwichBread()
     {
         System.out.println();
+        System.out.println();
         System.out.println("What Sandwich Bread would you like?");
         System.out.println(" [1] White bread");
         System.out.println(" [2] Wheat");
@@ -126,6 +179,7 @@ public class UserInterface
     public int toastedSandwich()
     {
        System.out.println();
+        System.out.println();
       System.out.println("Would you like the Sandwich Toasted?");
        System.out.println(" [1] yes");
        System.out.println(" [2] no");
@@ -136,8 +190,11 @@ public class UserInterface
     public int meatTopping()
     {
         System.out.println();
+        System.out.println();
         System.out.println("What kind of meat would you like on Your Sandwich?");
+        System.out.println();
         System.out.println("We got:");
+        System.out.println();
         System.out.println(" [1] Steak");
         System.out.println(" [2] ham");
         System.out.println(" [3] Salami");
@@ -152,9 +209,10 @@ public class UserInterface
     public int extraMeat()
     {
         System.out.println();
-       System.out.println("Would you like extra meat?");
+        System.out.println("Would you like extra meat?");
+        System.out.println();
         System.out.println(" [1] yes");
-      System.out.println(" [2] no");
+        System.out.println(" [2] no");
         System.out.println("-".repeat(50));
        return Integer.parseInt(scanner.nextLine().strip());
     }
@@ -162,7 +220,9 @@ public class UserInterface
     public int cheeseTopping()
     {
         System.out.println();
+        System.out.println();
         System.out.println("Would you like cheese?");
+        System.out.println();
         System.out.println(" [1] American");
         System.out.println(" [2] Provolone");
         System.out.println(" [3] Cheddar");
@@ -176,8 +236,10 @@ public class UserInterface
     {
         System.out.println();
         System.out.println("Would you like extra Cheese?");
+        System.out.println();
         System.out.println(" [1] yes");
         System.out.println(" [2] no");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
     }
 
@@ -246,19 +308,6 @@ public class UserInterface
         return Integer.parseInt(scanner.nextLine().strip());
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -6,9 +6,28 @@ import com.pluralsight.models.Interface.Size;
 public class Drinks extends Order implements Size
 {
     private String drinkSize;
+    private String drinkType;
 
-    public Drinks(String drinkSize) {
+    public Drinks(String drinkSize, String drinkType) {
         this.drinkSize = drinkSize;
+        this.drinkType = drinkType;
+    }
+
+    public String getDrinkType()
+    {
+        if ( drinkType.equalsIgnoreCase("Coke")
+                || drinkType.equalsIgnoreCase("Sprite")
+                || drinkType.equalsIgnoreCase("Dr Pepper")
+                || drinkType.equalsIgnoreCase("Fanta")
+                || drinkType.equalsIgnoreCase("Water")
+                || drinkType.equalsIgnoreCase("Vitamin water"))
+        {
+            return drinkType;
+        }
+        else {
+            return "None";
+        }
+
     }
 
     public String getDrinkSize() {
@@ -29,6 +48,7 @@ public class Drinks extends Order implements Size
                 return 0.0;
         }
     }
+
 
 
     @Override

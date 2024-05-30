@@ -75,13 +75,13 @@ public class Cashier
             {
                 System.out.println();
                 Drinks drink = (Drinks) order;
-                System.out.printf("Drink (Size: %s)                    %.2f \n", drink.getDrinkSize(), drink.getPrice());
+                System.out.printf("Drink %s (Size: %s)                    %.2f \n",  drink.getDrinkType(), drink.getDrinkSize(), drink.getPrice());
                 System.out.println();
             } else if (order instanceof Chips)
             {
                 System.out.println();
                 Chips chips = (Chips) order;
-                System.out.printf("Chips (Type: %s)                    %.2f \n", chips.isType() ? "With Chips" : "No Chips", chips.getPrice());
+                System.out.printf("Chips (Type: %s)                    %.2f \n", chips.isType(), chips.getPrice());
                 System.out.println();
             }
 

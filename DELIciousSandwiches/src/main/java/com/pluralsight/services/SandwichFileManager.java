@@ -67,12 +67,12 @@ public class SandwichFileManager
                 {
                     Drinks drink = (Drinks) order;
                     writer.write(" \n");
-                    writer.printf(" Drink (Size: %s)                  $ %.2f \n", drink.getDrinkSize(), drink.getPrice());
+                    writer.printf(" Drink %s (Size: %s)                  $ %.2f \n",drink.getDrinkType() ,drink.getDrinkSize(), drink.getPrice());
                 } else if (order instanceof Chips)
                 {
                     Chips chips = (Chips) order;
                     writer.write(" \n");
-                    writer.printf(" Chips (Type: %s)               $ %.2f \n", chips.isType() ? "With Chips" : "No Chips", chips.getPrice());
+                    writer.printf(" %s Chips               $ %.2f \n", chips.isType(), chips.getPrice());
                 }
 
             }

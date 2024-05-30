@@ -25,21 +25,28 @@ public class DeliciousSandwichesApplication
                 switch (choice) {
                     case 1:
                         newOrder();
-                    case 2:
+                    case 0:
                         return;
                 }
             }
         }catch(NumberFormatException e)
         {
+
             System.out.println("-".repeat(50));
             System.out.println("Sorry I did not get that.. \n Please enter a number 1 or 0 \n");
             run();
         }
     }
 
+
     private void newOrder()
     {
         orders = userInterface.getCustomerInformation();
+        orderChoice();
+    }
+
+    private void orderChoice()
+    {
         try
         {
             while(true)
@@ -62,19 +69,21 @@ public class DeliciousSandwichesApplication
                         return;
                     case 5:
                         Cancel(orders);
-                        return;
+                        break;
                     default:
-                        System.out.println("Sorry something went wrong. Please enter number between [0-3]");
+                        System.out.println("Sorry something went wrong. Please enter number between [1-5]");
                 }
             }
         }
         catch(NumberFormatException e)
         {
+            System.out.println();
             System.out.println("-".repeat(50));
-            System.out.println("Please enter a number between [0-3]");
-            newOrder();
+            System.out.println("Please enter a number between [1-5]");
+            orderChoice();
         }
     }
+
 
 
 
@@ -88,7 +97,12 @@ public class DeliciousSandwichesApplication
         String meat = sandwichMeatTopping();
         boolean extraMeat = extraMeatTopping();
         String cheese = cheeseTopping();
-        boolean extraCheese = extraCheeseTopping();
+        boolean extraCheese = false;
+
+        if (!cheese.equals("No cheese")) {
+            extraCheese = extraCheeseTopping();
+        }
+
 
         sandwichOrder = new Sandwich(sizeType, meat, breadType);
         orders.add(sandwichOrder);
@@ -126,12 +140,12 @@ public class DeliciousSandwichesApplication
     private void addDrink(Cashier orders)
     {
         String drinkSize = drinkSize();
-        Drinks customerDrink = new Drinks( drinkSize);
+        String drinkType = drinkType();
+        Drinks customerDrink = new Drinks(drinkSize, drinkType);
         orders.add(customerDrink);
 
         System.out.println(customerDrink.getDrinkSize());
         System.out.println(customerDrink.getPrice());
-
 
     }
 
@@ -150,14 +164,41 @@ public class DeliciousSandwichesApplication
                 case 3:
                     return "Large";
                 default:
+                    System.out.println();
                     System.out.println("Invalid selection. Please choose a valid Drink size.");
+            }
+        }
+    }
+
+    private String drinkType()
+    {
+        while (true)
+        {
+            int drinkSize = userInterface.drinkType();
+            switch (drinkSize)
+            {
+                case 1:
+                    return "Coke";
+                case 2:
+                    return "Sprite";
+                case 3:
+                    return "Dr Pepper";
+                case 4:
+                    return "Fanta";
+                case 5:
+                    return "Vitamin water";
+                case 6:
+                    return "Water";
+                default:
+                    System.out.println();
+                    System.out.println("Invalid selection. Please choose a drink ");
             }
         }
     }
 
     private void addChips(Cashier orders)
     {
-        boolean chips = chips();
+        String chips = chips();
         Chips chip = new Chips(chips);
         orders.add(chip);
 
@@ -166,19 +207,28 @@ public class DeliciousSandwichesApplication
 
     }
 
-    private boolean chips()
+    private String chips()
     {
         while (true)
         {
-            int drinkSize = userInterface.chips();
-            switch (drinkSize)
+            int chipType = userInterface.ChipType();
+            switch (chipType)
             {
                 case 1:
-                    return true;
+                    return "Lays";
                 case 2:
-                    return false;
+                    return "Dorito";
+                case 3:
+                    return "Cheetos";
+                case 4:
+                    return "Lays Baked";
+                case 5:
+                    return " Sun Chips";
+                case 6:
+                    return " Ruffles";
                 default:
-                    System.out.println("Invalid selection. Please choose a valid Drink size.");
+                    System.out.println();
+                    System.out.println("Invalid selection. Please choose a chip.");
             }
         }
     }
@@ -201,12 +251,16 @@ public class DeliciousSandwichesApplication
                 Cancel(orders);
                 break;
             default:
+                System.out.println();
                 System.out.println("Please enter [1] Confirm Or [2] To Cancel");
 
         }
 
 
+
+
     }
+
 
 
 
@@ -221,6 +275,11 @@ public class DeliciousSandwichesApplication
     private void Cancel(Cashier orders)
    {
        orders.getOrders().clear();
+       System.out.println();
+       System.out.println("Successfully Cancel");
+       System.out.println("-".repeat(50));
+
+       run();
 
 
     }
@@ -241,9 +300,10 @@ public class DeliciousSandwichesApplication
                     case 3:
                         return sandwichSize;
                     default:
-                        System.out.println("Invalid selection. Please choose a valid sandwich size.");
+                        System.out.println(" I was not able to get that. What kind of Sandwich Size would you like?");
                 }
             } catch (NumberFormatException e) {
+                System.out.println();
                 System.out.println("Please enter a number of between [1- 3]");
             }
         }
@@ -262,12 +322,14 @@ public class DeliciousSandwichesApplication
                     case 4:
                         return breadTypeChoice;
                     default:
-                        System.out.println("Invalid selection. Please choose a valid bread type.");
+                        System.out.println();
+                        System.out.println("Sorry I could not get that. What bread would you like?");
                         break;
 
                 }
             }catch(NumberFormatException e)
             {
+                System.out.println();
                 System.out.println("Please enter a number between [1-4]");
             }
         }
@@ -275,23 +337,31 @@ public class DeliciousSandwichesApplication
 
     private boolean toastedSandwich()
     {
-        while(true)
+        while (true)
         {
+            try
+            {
                 int toastedSandwich = userInterface.toastedSandwich();
-                switch(toastedSandwich)
+                switch (toastedSandwich)
                 {
                     case 1:
                         return true;
                     case 2:
                         return false;
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes or [2] no.");
+                        System.out.println();
+                        System.out.println("Sorry I was not able to get that. Would you like your bread toasted [1] Yes or [2] No");
+                        break;
 
                 }
 
-        }
 
+            } catch (NumberFormatException e)
+            {
+                System.out.println();
+                System.out.println("Please enter a number between [1] or [2]");
+            }
+        }
 
     }
 
@@ -318,13 +388,16 @@ public class DeliciousSandwichesApplication
                         return "Chicken";
                     case 6:
                         return "Bacon";
-                   default:
-                        return "Invalid selection. Please choose a valid meat type.";
+                    default:
+                        System.out.println("I did not get that. What kind of meat would you like? Please select between [1-6]");
+                        break;
+
 
                 }
 
             } catch(NumberFormatException e)
             {
+                System.out.println();
                 System.out.println("Please enter a number of between [1- 6]");
 
             }
@@ -347,11 +420,11 @@ public class DeliciousSandwichesApplication
                     case 2:
                         return false ;
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes or [2] no.");
+                        System.out.println("I did not get that. Would you like extra meat? [1] yes or [2] no.");
                 }
             }catch(NumberFormatException e)
             {
+                System.out.println();
                 System.out.println("Please enter a number of between [1- 2]");
             }
         }
@@ -371,12 +444,15 @@ public class DeliciousSandwichesApplication
                         return "Cheddar cheese";
                     case 4:
                         return "Swiss cheese";
-                    case 0:
+                    case 5:
                         return "No cheese";
                     default:
-                        System.out.println("Invalid selection. Please choose a valid cheese type.");
+                        System.out.println("Sorry I did not quite get that. Would you like cheese? Please select between [1-5]");
+                        break;
                 }
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e)
+            {
+                System.out.println();
                 System.out.println("Please enter a number of between [1-5]");
             }
         }
@@ -397,12 +473,13 @@ public class DeliciousSandwichesApplication
                     case 2:
                         return false;
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
+                        System.out.println("Sorry I did not get that. Would you like extra meat? [1] yes and [2] no.");
+                        break;
 
                 }
             }catch(NumberFormatException e)
             {
+                System.out.println();
                 System.out.println("Please enter a number of between [1- 2]");
 
             }
@@ -421,8 +498,7 @@ public class DeliciousSandwichesApplication
                 switch(topping)
                 {
                     case 1:
-                        String lettuce = "Lettuce";
-                        return lettuce;
+                        return "Lettuce";
                     case 2:
                         return "Peppers";
                     case 3:
@@ -440,14 +516,14 @@ public class DeliciousSandwichesApplication
                     case 9:
                         return " mushrooms";
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
+                        System.out.println("Sorry I did not get that. Would you like any Toppings? Select between [1-9] ");
+                        break;
 
                 }
             }catch(NumberFormatException e)
             {
-                System.out.println("Please enter a number of between [1- 2]");
-
+                System.out.println();
+                System.out.println("Please enter a number of between [1- 9]");
             }
 
 
@@ -467,12 +543,13 @@ public class DeliciousSandwichesApplication
                         sandwichOrder.addToppings(new RegularTopping(additionalTopping));
                         break;
                     case 2:
-                        // If the user chooses not to add another topping, simply return from this method
                         return;
                     default:
-                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
+                        System.out.println("I was not able to get that. Please choose [1] to add another topping or [2] to finish.");
+                        break;
                 }
             } catch (NumberFormatException e) {
+                System.out.println();
                 System.out.println("Please enter a number [1-2]");
             }
         }
@@ -503,11 +580,13 @@ public class DeliciousSandwichesApplication
                     case 6:
                         return  "vinaigrette";
                     default:
-                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
+                        System.out.println("Sorry I did not get that. Would you like any Sauce?");
+                        break;
                 }
             } catch(NumberFormatException e)
             {
-                System.out.println("Please enter a number [1-2]");
+                System.out.println();
+                System.out.println("Please enter a number [1-6]");
             }
         }
     }
@@ -527,9 +606,11 @@ public class DeliciousSandwichesApplication
                     case 2:
                         return;
                     default:
-                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
+                        System.out.println("I could not get that. Please choose [1] to add another topping or [2] to finish.");
+                        break;
                 }
             } catch (NumberFormatException e) {
+                System.out.println();
                 System.out.println("Please enter a number [1-2]");
             }
         }
@@ -553,11 +634,13 @@ public class DeliciousSandwichesApplication
                     case 3:
                         return  "au just and sauce";
                     default:
-                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
+                        System.out.println("Sorry did not get that. Would you like any sides?");
+                        break;
                 }
             } catch(NumberFormatException e)
             {
-                System.out.println("Please enter a number [1-2]");
+                System.out.println();
+                System.out.println("Please enter a number [1-3]");
             }
         }
     }
