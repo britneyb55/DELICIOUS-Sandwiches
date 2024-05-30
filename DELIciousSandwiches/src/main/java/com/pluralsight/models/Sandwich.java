@@ -1,31 +1,28 @@
 package com.pluralsight.models;
 
 
+import com.pluralsight.models.Interface.ToppingSize;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sandwich extends OrderSize
-{
+public class Sandwich extends Order {
 
+    private int sizeType;
+    private String meatType;
     private int breadType;
-    private int meatType;
-    private List<Toppings> toppings;
+    private boolean toasted;
+    private List<Topping> toppings;
 
-
-
-
-    public Sandwich(int sizeType, int breadType,int meatType)
-    {
-        super(sizeType);
-        this.breadType = breadType;
+    public Sandwich(int sizeType, String meatType , int breadType) {
+        this.sizeType = sizeType;
         this.meatType = meatType;
+        this.breadType = breadType;
         this.toppings = new ArrayList<>();
     }
 
-    public String getBreadType()
-    {
-        switch(breadType)
-        {
+    public String getBreadType() {
+        switch (breadType) {
             case 1:
                 return "White bread";
             case 2:
@@ -40,41 +37,38 @@ public class Sandwich extends OrderSize
         }
     }
 
-    public String getMeatType()
-    {
-        switch(meatType)
-        {
-            case 1:
-                return "Steak";
-            case 2:
-                return "ham";
-            case 3:
-                return "Salami";
-            case 4:
-                return "Roast Beef";
-            case 5:
-                return "Chicken";
-            case 6:
-                return "Bacon";
-            default:
-                return "Invalid selection. Please choose a valid meat type.";
+    public String getMeatType() {
+        return meatType;
+    }
 
+    public boolean isToasted() {
+        return toasted;
+    }
+
+    public void setToasted(boolean toasted) {
+        this.toasted = toasted;
+    }
+
+
+    public int getSizeType()
+    {
+        if (sizeType == 1) {
+            return 4;
+
+        } else if (sizeType == 2) {
+            return 8;
+
+        } else if (sizeType == 3) {
+            return 12;
+        } else {
+            return 0;
         }
-
     }
 
 
-    public int getSize()
-    {
-        int size = getSizeType();
-        return size;
-    }
-
-
-    @Override
     public double getSandwichSizePrice()
     {
-        switch(getSize())
+        switch(getSizeType())
         {
             case 4:
                 return 5.50;
@@ -89,83 +83,54 @@ public class Sandwich extends OrderSize
 
     }
 
-    @Override
-    public double getMeatToppingPrice()
-    {
-        switch(getSize())
-        {
-            case 4:
-                return 1.00;
-            case 8:
-                return 2.00;
-            case 12:
-                return 3.00;
-            default:
-                return 0.0;
-
-        }
-
-    }
-
 
     @Override
-    public double getExtraMeatToppingPrice()
+    public double getPrice()
     {
-        switch(getSize())
+        double totalCost = 0.0;
+
+        for (Topping topping: toppings)
         {
-            case 4:
-                return .50;
-            case 8:
-                return 1.00;
-            case 12:
-                return 1.50;
-            default:
-                return 0.0;
-
+            if(topping instanceof ExtraCostTopping)
+            {
+                totalCost += ((ExtraCostTopping) topping).getPrice();
+            }
         }
+        totalCost += getSandwichSizePrice();
+
+        return totalCost;
     }
 
-    @Override
-    public double getCheeseToppingPrice()
-    {
-        switch(getSize())
-        {
-            case 4:
-                return .75;
-            case 8:
-                return 1.50;
-            case 12:
-                return 2.25;
-            default:
-                return 0.0;
 
-        }
-    }
-
-    @Override
-    public double getextraCheeseToppingPrice()
-    {
-        switch(getSize())
-        {
-            case 4:
-                return .30;
-            case 8:
-                return .60;
-            case 12:
-                return .90;
-            default:
-                return 0.0;
-
-        }
-    }
-
-    public void addToppings(Toppings toppings) {
-        this.toppings.add(toppings);
-    }
-    public List<Toppings> getInventory()
+    public List<Topping> getInventory()
     {
         return toppings;
     }
+
+    public void displayTopping()
+    {
+        for (Topping topping: toppings)
+        {
+            if(topping instanceof ExtraCostTopping)
+            {
+                System.out.println(" - Extra Meat: " + ((ExtraCostTopping) topping).isExtraMeat());
+                System.out.println(" - Cheese: " + ((ExtraCostTopping) topping).isCheese());
+                System.out.println(" - Extra Cheese: " + ((ExtraCostTopping) topping).isExtraCheese());
+            }
+            System.out.println(topping);
+        }
+
+    }
+
+
+    public void addToppings(Topping topping)
+    {
+        toppings.add(topping);
+
+    }
+
+
+
 }
 
 

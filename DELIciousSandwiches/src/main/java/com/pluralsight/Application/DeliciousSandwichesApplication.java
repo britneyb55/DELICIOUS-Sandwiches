@@ -1,7 +1,6 @@
 package com.pluralsight.Application;
 
-import com.pluralsight.models.Sandwich;
-import com.pluralsight.models.Toppings;
+import com.pluralsight.models.*;
 import com.pluralsight.ui.UserInterface;
 
 import java.util.List;
@@ -10,7 +9,8 @@ import java.util.Scanner;
 public class DeliciousSandwichesApplication
 {
     private Scanner scanner = new Scanner(System.in);
-   private Sandwich sandwichOrder;
+    private static Cashier orders;
+    private Sandwich sandwichOrder;
     private UserInterface userInterface = new UserInterface();
 
     public void run()
@@ -36,19 +36,30 @@ public class DeliciousSandwichesApplication
 
     private void newOrder()
     {
+        orders = userInterface.getCustomerInformation();
         try
         {
-            while (true)
+            while(true)
             {
                 int orderChoice = userInterface.orderScreen();
 
                 switch (orderChoice)
                 {
                     case 1:
-                        addSandwich();
+                        addSandwich(orders);
                         break;
                     case 2:
+                        addDrink(orders);
+                        break;
+                    case 3:
+                        addChips(orders);
+                        break;
+                    case 4:
+                        Checkout(orders);
                         return;
+                    case 5:
+                        Cancel(orders);
+                        break;
                     default:
                         System.out.println("Sorry something went wrong. Please enter number between [0-3]");
                 }
@@ -62,22 +73,127 @@ public class DeliciousSandwichesApplication
         }
     }
 
-    private void addSandwich() {
+
+
+
+    private void addSandwich(Cashier orders)
+    {
         int sizeType = addSandwichSize();
         int breadType = sandwichBread();
-        int meatType = sandwichMeatTopping();
-        sandwichOrder = new Sandwich(sizeType, breadType,meatType);
-        addSandwichToppings();
 
-        System.out.println("Your order: " + sandwichOrder.getBreadType() + ", " + sandwichOrder.getSize() + " inches." + sandwichOrder.getMeatType());
-        for(Toppings toppings: sandwichOrder.getInventory())
-        {
-            System.out.printf(" %s , %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s  \n", toppings.getExtraMeat(), toppings.getCheese(), toppings.getExtraCheese(), toppings.getLettuce(), toppings.getPeppers(), toppings.getOnions(), toppings.getTomatoes(), toppings.getJalepenos(), toppings.getCucumbers(), toppings.getPeppers(), toppings.getGuacamole(), toppings.getMushrooms(), toppings.getMayo(), toppings.getMustard(), toppings.getKetchup(), toppings.getRanch(), toppings.getThousand_islands(), toppings.getVinaigrette(), toppings.getSauce() );
-        }
+
+        String meat = sandwichMeatTopping();
+        boolean extraMeat = extraMeatTopping();
+        String cheese = cheeseTopping();
+        boolean extraCheese = extraCheeseTopping();
+
+        sandwichOrder = new Sandwich(sizeType, meat, breadType);
+        orders.add(sandwichOrder);
+
+        Boolean toastedSandwich = toastedSandwich();
+        sandwichOrder.setToasted(toastedSandwich);
+
+        ExtraCostTopping extraCostTopping = new ExtraCostTopping("Topping:", sizeType, meat ,extraMeat, cheese, extraCheese);
+        sandwichOrder.addToppings(extraCostTopping);
+
+        String customerToppings = regularTopping();
+        Topping regularToppings = new RegularTopping(customerToppings);
+        sandwichOrder.addToppings(regularToppings);
+        anotherTopping();
+
+        String sauce = sauceTopping();
+        Topping sauceTopping = new RegularTopping(sauce);
+        sandwichOrder.addToppings(sauceTopping);
+        anotherSauceTopping();
+
+        String side = sides();
+        Topping sides = new RegularTopping(side);
+        sandwichOrder.addToppings(sides);
+
+
         System.out.println();
         System.out.println("Press enter to go back to menu");
         scanner.nextLine();
 
+    }
+
+
+
+    private void addDrink(Cashier orders)
+    {
+        String drinkSize = drinkSize();
+        Drinks customerDrink = new Drinks( drinkSize);
+        orders.add(customerDrink);
+
+        System.out.println(customerDrink.getDrinkSize());
+        System.out.println(customerDrink.getPrice());
+
+
+    }
+
+
+    private String drinkSize()
+    {
+        while (true)
+        {
+            int drinkSize = userInterface.drinks();
+            switch (drinkSize)
+            {
+                case 1:
+                    return "Small";
+                case 2:
+                    return "Medium";
+                case 3:
+                    return "Large";
+                default:
+                    System.out.println("Invalid selection. Please choose a valid Drink size.");
+            }
+        }
+    }
+
+    private void addChips(Cashier orders)
+    {
+        boolean chips = chips();
+        Chips chip = new Chips(chips);
+        orders.add(chip);
+
+        System.out.println(chip.isType());
+        System.out.println(chip.getPrice());
+
+    }
+
+    private boolean chips()
+    {
+        while (true)
+        {
+            int drinkSize = userInterface.chips();
+            switch (drinkSize)
+            {
+                case 1:
+                    return true;
+                case 2:
+                    return false;
+                default:
+                    System.out.println("Invalid selection. Please choose a valid Drink size.");
+            }
+        }
+    }
+
+    private void Cancel(Cashier orders)
+    {
+
+    }
+
+    private void Checkout(Cashier orders)
+    {
+        orders.displayTopping();
+
+
+
+    }
+
+    private void Confirm(Cashier orders)
+    {
 
     }
 
@@ -125,7 +241,30 @@ public class DeliciousSandwichesApplication
         }
     }
 
-    private int sandwichMeatTopping()
+    private boolean toastedSandwich()
+    {
+        while(true)
+        {
+                int toastedSandwich = userInterface.toastedSandwich();
+                switch(toastedSandwich)
+                {
+                    case 1:
+                        return true;
+                    case 2:
+                        return false;
+                    default:
+                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
+                                "[1] yes or [2] no.");
+
+                }
+
+        }
+
+
+    }
+
+
+    private String sandwichMeatTopping()
     {
         while(true)
         {
@@ -133,55 +272,35 @@ public class DeliciousSandwichesApplication
             {
                 int sandwichMeat = userInterface.meatTopping();
 
-                switch(sandwichMeat)
+                switch (sandwichMeat)
                 {
                     case 1:
+                        return "Steak";
                     case 2:
+                        return "Ham";
                     case 3:
+                        return "Salami";
                     case 4:
+                        return "Roast Beef";
                     case 5:
+                        return "Chicken";
                     case 6:
-                        return sandwichMeat;
-                    default:
-                        System.out.println("Invalid selection. Please choose a valid meat type.");
+                        return "Bacon";
+                   default:
+                        return "Invalid selection. Please choose a valid meat type.";
 
                 }
-            }catch(NumberFormatException e)
+
+            } catch(NumberFormatException e)
             {
                 System.out.println("Please enter a number of between [1- 6]");
 
             }
         }
+
     }
 
-    private void addSandwichToppings() {
-        String extraMeat = extraMeatTopping();
-        String cheese = cheeseTopping();
-        String extraCheese = extraCheeseTopping();
-        String lettuce = lettuceTopping();
-        String peppers = peppersTopping();
-        String onions = onionsTopping();
-        String tomatoes = tomatoesTopping();
-        String jalepenos = jalepenosTopping();
-        String cucumbers = cucumbersTopping();
-        String pickles = picklesTopping();
-        String guacamole = guacamoleTopping();
-        String mushrooms = mushroomsTopping();
-        String mayo = mayoTopping();
-        String mustard = mustardTopping();
-        String ketchup = katchupTopping();
-        String ranch = ranchTopping();
-        String thousandIsland = thousandIslandTopping();
-        String vinaigrette = vinaigretteTopping();
-        String sides = auJusTopping(); // Corrected method name
-
-        Toppings toppings = new Toppings(extraMeat, cheese, extraCheese, lettuce, peppers, onions, tomatoes, jalepenos, cucumbers, pickles, guacamole, mushrooms, mayo, mustard, ketchup, ranch, thousandIsland, vinaigrette, sides);
-        sandwichOrder.addToppings(toppings);
-    }
-
-
-
-    private String extraMeatTopping()
+    private boolean extraMeatTopping()
     {
         while(true)
         {
@@ -192,56 +311,46 @@ public class DeliciousSandwichesApplication
                 switch(extraMeat)
                 {
                     case 1:
-                        return "Extra Meat";
+                        return true;
+                    case 2:
+                        return false ;
                     default:
                         System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
+                                "[1] yes or [2] no.");
                 }
             }catch(NumberFormatException e)
             {
                 System.out.println("Please enter a number of between [1- 2]");
-
             }
         }
-
     }
 
     private String cheeseTopping()
     {
-        while(true)
-        {
-            try
-            {
+        while (true) {
+            try {
                 int cheese = userInterface.cheeseTopping();
-
-                switch(cheese)
-                {
+                switch (cheese) {
                     case 1:
                         return "American cheese";
                     case 2:
-                        return "provolone cheese";
+                        return "Provolone cheese";
                     case 3:
-                        return "cheddar cheese";
+                        return "Cheddar cheese";
                     case 4:
-                        return "swiss cheese";
-                    case 5:
+                        return "Swiss cheese";
+                    case 0:
                         return "No cheese";
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
+                        System.out.println("Invalid selection. Please choose a valid cheese type.");
                 }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [0-5]");
-
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number of between [1-5]");
             }
         }
-
     }
 
-    private String extraCheeseTopping()
+    private boolean extraCheeseTopping()
     {
         while(true)
         {
@@ -252,7 +361,9 @@ public class DeliciousSandwichesApplication
                 switch(extraMeat)
                 {
                     case 1:
-                        return "Extra Cheese";
+                        return true;
+                    case 2:
+                        return false;
                     default:
                         System.out.println("Sorry I could not get that. Would you like extra meat? " +
                                 "[1] yes and [2] no.");
@@ -267,200 +378,35 @@ public class DeliciousSandwichesApplication
 
     }
 
-    private String lettuceTopping()
+    private String regularTopping()
     {
         while(true)
         {
             try
             {
-                int extraMeat = userInterface.lettuceTopping();
+                int topping = userInterface.regularToppings();
 
-                switch(extraMeat)
+                switch(topping)
                 {
                     case 1:
-                        return "Lettuce";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String peppersTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.pepperTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "pepper";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String onionsTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.onionsTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "onions";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String tomatoesTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.tomatoesTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "tomatoes";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String jalepenosTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.jalepenosTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
+                        String lettuce = "Lettuce";
+                        return lettuce;
+                    case 2:
+                        return "Peppers";
+                    case 3:
+                        return "Onions";
+                    case 4:
+                        return "Tomatoes";
+                    case 5:
                         return "jalepenos";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String cucumbersTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.cucumbersTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "cucumbers";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String picklesTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.picklesTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
+                    case 6:
+                        return "Cucumbers";
+                    case 7:
                         return "pickles";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String guacamoleTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.guacamoleTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
+                    case 8:
                         return "guacamole";
+                    case 9:
+                        return " mushrooms";
                     default:
                         System.out.println("Sorry I could not get that. Would you like extra meat? " +
                                 "[1] yes and [2] no.");
@@ -471,242 +417,117 @@ public class DeliciousSandwichesApplication
                 System.out.println("Please enter a number of between [1- 2]");
 
             }
-        }
 
+
+
+        }
     }
 
-    private String mushroomsTopping()
+    private void anotherTopping()
     {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.mushroomsTopping();
+        while (true) {
+            try {
+                int choice = userInterface.selectAnotherTopping();
 
-                switch(extraMeat)
-                {
+                switch (choice) {
                     case 1:
-                        return "mushrooms";
+                        String additionalTopping = regularTopping();
+                        sandwichOrder.addToppings(new RegularTopping(additionalTopping));
+                        break;
+                    case 2:
+                        // If the user chooses not to add another topping, simply return from this method
+                        return;
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
+                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
                 }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number [1-2]");
             }
         }
-
     }
 
-    private String mayoTopping()
+
+    private String sauceTopping()
     {
+
         while(true)
         {
             try
             {
-                int extraMeat = userInterface.mayoTopping();
+                int choice = userInterface.sauce();
 
-                switch(extraMeat)
+                switch(choice)
                 {
                     case 1:
-                        return "mayo";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String mustardTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.mustardTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
+                       return  "mayo";
+                    case 2:
                         return "mustard";
+                    case 3:
+                        return  "ketchup";
+                    case 4:
+                        return  "ranch";
+                    case 5:
+                        return  "thousand islands";
+                    case 6:
+                        return  "vinaigrette";
                     default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
+                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
                 }
-            }catch(NumberFormatException e)
+            } catch(NumberFormatException e)
             {
-                System.out.println("Please enter a number of between [1- 2]");
-
+                System.out.println("Please enter a number [1-2]");
             }
         }
-
     }
 
-    private String katchupTopping()
+    private void anotherSauceTopping()
     {
+        while (true)
+        {
+            try {
+                int choice = userInterface.selectAnotherSauceTopping();
+
+                switch (choice) {
+                    case 1:
+                        String additionalTopping = sauceTopping();
+                        sandwichOrder.addToppings(new RegularTopping(additionalTopping));
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number [1-2]");
+            }
+        }
+    }
+
+    private String sides()
+    {
+
         while(true)
         {
             try
             {
-                int extraMeat = userInterface.ketchupTopping();
+                int choice = userInterface.sides();
 
-                switch(extraMeat)
+                switch(choice)
                 {
                     case 1:
-                        return "ketchup";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String ranchTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.ranchTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "ranch";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String thousandIslandTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.thousandIslandsTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "thousandIsland";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String vinaigretteTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.vinaigretteTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "vinaigrette";
-                    default:
-                        System.out.println("Sorry I could not get that. Would you like extra meat? " +
-                                "[1] yes and [2] no.");
-
-                }
-            }catch(NumberFormatException e)
-            {
-                System.out.println("Please enter a number of between [1- 2]");
-
-            }
-        }
-
-    }
-
-    private String auJusTopping()
-    {
-        while(true)
-        {
-            try
-            {
-                int extraMeat = userInterface.sidesTopping();
-
-                switch(extraMeat)
-                {
-                    case 1:
-                        return "au just";
+                        return  "au jus";
                     case 2:
                         return "sauce";
                     case 3:
-                        return "au just and sauce";
+                        return  "au just and sauce";
                     default:
-                        System.out.println("Sorry I could not get that. Would you like sauce? " +
-                                "[1] yes and [2] no.");
-
+                        System.out.println("Invalid selection. Please choose [1] to add another topping or [2] to finish.");
                 }
-            }catch(NumberFormatException e)
+            } catch(NumberFormatException e)
             {
-                System.out.println("Please enter a number of between [1- 2]");
-
+                System.out.println("Please enter a number [1-2]");
             }
         }
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
