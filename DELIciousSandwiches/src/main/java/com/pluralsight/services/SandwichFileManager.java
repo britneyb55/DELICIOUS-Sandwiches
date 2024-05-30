@@ -6,11 +6,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.time.format.DateTimeFormatter;
+
 
 public class SandwichFileManager
 {
-    private final String LOG_DIRECTORY_PATH = "files";
-    private String filePath;
+    private final String LOG_DIRECTORY_PATH = "receipts";
+    private static String filePath;
 
     public SandwichFileManager(String fileName)
     {
@@ -29,31 +32,52 @@ public class SandwichFileManager
 
     }
 
-    public void saveOrder(Cashier orders)
+    public static void saveOrder(Cashier orders)
     {
-        File logFile = new File(filePath);
+        File file = new File(filePath);
 
-        try(FileWriter fileWriter = new FileWriter(logFile);
+        try(FileWriter fileWriter = new FileWriter(file);
             PrintWriter writer = new PrintWriter(fileWriter)
         ) {
 
+            writer.write(" ".repeat(10) + "GRAND DELI Sandwiches\n");
 
+            writer.write(String.format(" Customer: %s \n Order Date: %s \n", orders.getCustomerName(), orders.getOrderDateTime()));
+
+            writer.write(" Sandwiches:\n");
             for (Order order : orders.getOrders())
             {
                 if (order instanceof Sandwich)
                 {
                     Sandwich sandwich = (Sandwich) order;
-                    writer.printf("%d'' %s Sandwich                    %.2f \n", sandwich.getSizeType(), sandwich.getMeatType(), sandwich.getPrice());
-                    writer.write(sandwich.displayTopping() + "\n");
-                } else if (order instanceof Drinks) {
-                    Drinks drink = (Drinks) order;
-                    writer.printf("Drink (Size: %s)                    %.2f \n", drink.getDrinkSize(), drink.getPrice());
-                } else if (order instanceof Chips) {
-                    Chips chips = (Chips) order;
-                    writer.printf("Chips (Type: %s)                    %.2f \n", chips.isType() ? "With Chips" : "No Chips", chips.getPrice());
-                }
-            }
 
+                    writer.printf("\n %d'' %s Sandwich                     $ %.2f \n", sandwich.getSizeType(), sandwich.getMeatType(), sandwich.getPrice());
+
+                    List<Topping> toppings = sandwich.getInventory();
+                    for (Topping topping : toppings) {
+                        if (topping instanceof ExtraCostTopping) {
+                            writer.printf(" Extra Meat: %b\n", ((ExtraCostTopping) topping).isExtraMeat());
+                            writer.printf(" Cheese: %b\n", ((ExtraCostTopping) topping).isCheese());
+                            writer.printf(" Extra Cheese: %b\n", ((ExtraCostTopping) topping).isExtraCheese());
+                        }
+                        writer.println(" ".repeat(4) + topping);
+                    }
+
+                } else if (order instanceof Drinks)
+                {
+                    Drinks drink = (Drinks) order;
+                    writer.write(" \n");
+                    writer.printf(" Drink (Size: %s)                  $ %.2f \n", drink.getDrinkSize(), drink.getPrice());
+                } else if (order instanceof Chips)
+                {
+                    Chips chips = (Chips) order;
+                    writer.write(" \n");
+                    writer.printf(" Chips (Type: %s)               $ %.2f \n", chips.isType() ? "With Chips" : "No Chips", chips.getPrice());
+                }
+
+            }
+            writer.write("-".repeat(50));
+            writer.write(" \n Total :" + " ".repeat(33)+ "$ "+orders.getPrice());
 
         }
         catch (IOException ex)

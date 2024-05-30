@@ -10,14 +10,14 @@ public class Cashier
 {
 
     private String customerName;
-    private LocalDateTime orderDateTime;
+    private  String orderDateTime;
 
     private List<Order> orders;
 
 
-    public Cashier(String customerName, LocalDateTime orderDateTime) {
+    public Cashier(String customerName,  String orderDateTime) {
         this.customerName = customerName;
-        this.orderDateTime = orderDateTime;
+        this.orderDateTime =  orderDateTime;;
         this.orders = new ArrayList<>();
     }
 
@@ -25,7 +25,8 @@ public class Cashier
         return customerName;
     }
 
-    public LocalDateTime getOrderDateTime() {
+    public String getOrderDateTime()
+    {
         return orderDateTime;
     }
 
@@ -34,12 +35,18 @@ public class Cashier
         orders.add(order);
     }
 
+    public void remove(Order order)
+    {
+        orders.remove(order);
+    }
+
     public List<Order> getOrders()
     {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<Order> orders)
+    {
         this.orders = orders;
     }
 
@@ -84,6 +91,8 @@ public class Cashier
         System.out.println();
         System.out.println();
     }
+
+
 
 
 

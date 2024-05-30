@@ -5,6 +5,7 @@ import com.pluralsight.models.Cashier;
 
 import java.sql.SQLOutput;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class UserInterface
@@ -37,8 +38,10 @@ public class UserInterface
         System.out.println("Enter your name: ");
         String customerName = scanner.nextLine();
         LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter dateFormatter1 = DateTimeFormatter.ofPattern("yyyy-MM-dd - hh:mm:ss");
 
-        return new Cashier(customerName, currentDateTime);
+
+        return new Cashier(customerName, currentDateTime.format(dateFormatter1));
     }
 
     public int orderScreen()
@@ -51,7 +54,7 @@ public class UserInterface
         System.out.println(" [2] Drinks");
         System.out.println(" [3] Chips");
         System.out.println(" [4] Checkout");
-        System.out.println(" [0] Cancel Order");
+        System.out.println(" [5] Cancel Order");
         System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
     }
@@ -91,16 +94,19 @@ public class UserInterface
         System.out.println("Chips Menu");
         System.out.println("[1] yes");
         System.out.println("[2] no");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
     }
 
-    public void checkOut()
+    public int checkOut()
     {
         System.out.println();
         System.out.println("-".repeat(50));
-        System.out.println("CheckOut");
-
+        System.out.println(" [1] Confirm");
+        System.out.println(" [2] Cancel");
+        System.out.println("-".repeat(50));
+        return Integer.parseInt(scanner.nextLine().strip());
 
     }
 
@@ -161,7 +167,8 @@ public class UserInterface
         System.out.println(" [2] Provolone");
         System.out.println(" [3] Cheddar");
         System.out.println(" [4] Swiss");
-        System.out.println(" [0] No Cheese");
+        System.out.println(" [5] No Cheese");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
     }
 
@@ -187,6 +194,7 @@ public class UserInterface
         System.out.println(" [7] pickles");
         System.out.println(" [8] guacamole");
         System.out.println(" [9] mushrooms");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
     }
@@ -197,6 +205,7 @@ public class UserInterface
         System.out.println("Would you like to select another topping?");
         System.out.println(" [1] yes");
         System.out.println(" [2] no");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
     }
@@ -211,6 +220,7 @@ public class UserInterface
         System.out.println(" [4] ranch");
         System.out.println(" [5] thousand Island");
         System.out.println(" [6] vinaigrette");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
     }
 
@@ -220,6 +230,7 @@ public class UserInterface
         System.out.println("Would you like to select another topping?");
         System.out.println(" [1] yes");
         System.out.println(" [2] no");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
     }
@@ -231,6 +242,7 @@ public class UserInterface
         System.out.println(" [1] au jus");
         System.out.println(" [2] sauce");
         System.out.println(" [3] Both au jus and sauce");
+        System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
 
     }

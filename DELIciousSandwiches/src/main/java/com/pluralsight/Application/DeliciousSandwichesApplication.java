@@ -1,10 +1,12 @@
 package com.pluralsight.Application;
 
 import com.pluralsight.models.*;
+import com.pluralsight.services.SandwichFileManager;
 import com.pluralsight.ui.UserInterface;
 
-import java.util.List;
 import java.util.Scanner;
+
+
 
 public class DeliciousSandwichesApplication
 {
@@ -12,6 +14,7 @@ public class DeliciousSandwichesApplication
     private static Cashier orders;
     private Sandwich sandwichOrder;
     private UserInterface userInterface = new UserInterface();
+
 
     public void run()
     {
@@ -59,7 +62,7 @@ public class DeliciousSandwichesApplication
                         return;
                     case 5:
                         Cancel(orders);
-                        break;
+                        return;
                     default:
                         System.out.println("Sorry something went wrong. Please enter number between [0-3]");
                 }
@@ -110,6 +113,7 @@ public class DeliciousSandwichesApplication
         Topping sides = new RegularTopping(side);
         sandwichOrder.addToppings(sides);
 
+        System.out.println("Your Sandwich Order is successfully saved!");
 
         System.out.println();
         System.out.println("Press enter to go back to menu");
@@ -179,10 +183,7 @@ public class DeliciousSandwichesApplication
         }
     }
 
-    private void Cancel(Cashier orders)
-    {
 
-    }
 
     private void Checkout(Cashier orders)
     {
@@ -190,12 +191,43 @@ public class DeliciousSandwichesApplication
 
 
 
+        int userChoice = userInterface.checkOut();
+        switch(userChoice)
+        {
+            case 1:
+                Confirm(orders);
+                break;
+            case 2:
+                Cancel(orders);
+                break;
+            default:
+                System.out.println("Please enter [1] Confirm Or [2] To Cancel");
+
+        }
+
+
     }
+
+
 
     private void Confirm(Cashier orders)
     {
+        SandwichFileManager sandwichFileManager = new SandwichFileManager(orders.getOrderDateTime());
+        sandwichFileManager.saveOrder(orders);
+
 
     }
+
+    private void Cancel(Cashier orders)
+   {
+       orders.getOrders().clear();
+
+
+    }
+
+
+
+
 
     private int addSandwichSize()
     {
