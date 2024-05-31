@@ -99,6 +99,7 @@ public class RegularTopping extends Topping
         super(type);
     }
 }
+
 public class ExtraCostTopping extends Topping implements ToppingSize
 {
     private int sizeType;
