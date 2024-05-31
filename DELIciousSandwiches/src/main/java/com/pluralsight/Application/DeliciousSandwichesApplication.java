@@ -110,7 +110,7 @@ public class DeliciousSandwichesApplication
         Boolean toastedSandwich = toastedSandwich();
         sandwichOrder.setToasted(toastedSandwich);
 
-        ExtraCostTopping extraCostTopping = new ExtraCostTopping("Topping:", sizeType, meat ,extraMeat, cheese, extraCheese);
+        ExtraCostTopping extraCostTopping = new ExtraCostTopping("Toppings:", sizeType, meat ,extraMeat, cheese, extraCheese);
         sandwichOrder.addToppings(extraCostTopping);
 
         String customerToppings = regularTopping();
@@ -144,8 +144,7 @@ public class DeliciousSandwichesApplication
         Drinks customerDrink = new Drinks(drinkSize, drinkType);
         orders.add(customerDrink);
 
-        System.out.println(customerDrink.getDrinkSize());
-        System.out.println(customerDrink.getPrice());
+        System.out.printf("Your Drink has successfully been added to your order %s %s %.2f: \n", customerDrink.getDrinkSize(), customerDrink.getDrinkType(), customerDrink.getPrice());
 
     }
 
@@ -217,9 +216,7 @@ public class DeliciousSandwichesApplication
         String chips = chips();
         Chips chip = new Chips(chips);
         orders.add(chip);
-
-        System.out.println(chip.isType());
-        System.out.println(chip.getPrice());
+        System.out.printf("Your Chips has successfully been added to your orders :  %s %.2f \n", chip.isType(),chip.getPrice());
 
     }
 

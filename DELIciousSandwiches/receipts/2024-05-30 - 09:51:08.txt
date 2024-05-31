@@ -1,0 +1,22 @@
+           GRAND DELI  
+ Customer: Elenor 
+ Order Date: 2024-05-30 - 09:51:08 
+ Sandwiches:
+
+ 12'' Steak Sandwich                     $ 16.15 
+ Extra Meat: true
+ Cheese: true
+ Extra Cheese: true
+    Toppings:
+    Lettuce
+    Tomatoes
+    jalepenos
+    guacamole
+    mayo
+    sauce
+ 
+ Drink Coke (Size: Large)                  $ 3.00 
+ 
+ Lays Baked Chips               $ 1.50 
+-------------------------------------------------- 
+ Total :                                 $ 20.65

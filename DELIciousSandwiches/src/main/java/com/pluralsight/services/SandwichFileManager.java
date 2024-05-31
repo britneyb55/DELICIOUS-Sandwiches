@@ -40,9 +40,9 @@ public class SandwichFileManager
             PrintWriter writer = new PrintWriter(fileWriter)
         ) {
 
-            writer.write(" ".repeat(10) + "GRAND DELI Sandwiches\n");
+            writer.write(" ".repeat(10) + " GRAND DELI  \n");
 
-            writer.write(String.format(" Customer: %s \n Order Date: %s \n", orders.getCustomerName(), orders.getOrderDateTime()));
+            writer.write(String.format(" Customer: %s \n Order Date: %s \n Order Ready in 15 Min\n", orders.getCustomerName(), orders.getOrderDateTime()));
 
             writer.write(" Sandwiches:\n");
             for (Order order : orders.getOrders())

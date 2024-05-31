@@ -18,11 +18,11 @@ public class UserInterface
         System.out.println("-".repeat(50));
         System.out.println("-".repeat(50));
         System.out.println();
-        System.out.println("Welcome To GRAND DELI sandwiches ");
+        System.out.println("Welcome To GRAND DELI ");
         System.out.println();
         System.out.println("Would you like to:");
         System.out.println();
-        System.out.println(" [1] Order a sandwiches");
+        System.out.println(" [1] Order a sandwich");
         System.out.println(" [0] Exit");
         System.out.println("-".repeat(50));
         return Integer.parseInt(scanner.nextLine().strip());
