@@ -154,18 +154,25 @@ public class DeliciousSandwichesApplication
     {
         while (true)
         {
-            int drinkSize = userInterface.drinks();
-            switch (drinkSize)
+            try {
+                int drinkSize = userInterface.drinks();
+                switch (drinkSize) {
+                    case 1:
+                        return "Small";
+                    case 2:
+                        return "Medium";
+                    case 3:
+                        return "Large";
+                    default:
+                        System.out.println();
+                        System.out.println("I was not able to get that. What kind of size would you like? [1] Small [2] Medium [3] Large");
+                        break;
+                }
+            }
+            catch(NumberFormatException e)
             {
-                case 1:
-                    return "Small";
-                case 2:
-                    return "Medium";
-                case 3:
-                    return "Large";
-                default:
-                    System.out.println();
-                    System.out.println("Invalid selection. Please choose a valid Drink size.");
+                System.out.println();
+                System.out.println("Please enter a number of between [1- 3]");
             }
         }
     }
@@ -174,6 +181,9 @@ public class DeliciousSandwichesApplication
     {
         while (true)
         {
+            try{
+
+
             int drinkSize = userInterface.drinkType();
             switch (drinkSize)
             {
@@ -191,7 +201,13 @@ public class DeliciousSandwichesApplication
                     return "Water";
                 default:
                     System.out.println();
-                    System.out.println("Invalid selection. Please choose a drink ");
+                    System.out.println("I was not able to get that. What type of  Flavor would you like? ");
+                    break;
+            }
+            }catch(NumberFormatException e)
+            {
+                System.out.println();
+                System.out.println("Select a drink flavor between [1-6]");
             }
         }
     }
@@ -211,6 +227,8 @@ public class DeliciousSandwichesApplication
     {
         while (true)
         {
+            try{
+
             int chipType = userInterface.ChipType();
             switch (chipType)
             {
@@ -228,7 +246,14 @@ public class DeliciousSandwichesApplication
                     return " Ruffles";
                 default:
                     System.out.println();
-                    System.out.println("Invalid selection. Please choose a chip.");
+                    System.out.println("I was not able to get that. What kind of Chips would you like?.");
+                    break;
+            }
+            }catch(NumberFormatException e)
+            {
+                System.out.println();
+                System.out.println("Select a chip between 1-6:");
+                System.out.println();
             }
         }
     }
