@@ -20,13 +20,15 @@ In my new Diagram I implement more class a Regular and Cost Topping that can ext
 
 Lets Order a sandwich
 - Enter 1
+
 Once entering 1 
-- It will prompt for the customer name to keep track of the person order and who it is. 
+It will prompt for the customer name to keep track of the person order and who it is. 
 
 ![Home screen](images/partone.jpeg)
 
 View GRAND DELI Meun options 
 - Enter 1
+
 Also allows you to create a sandwich 
 
 SELECT a sandwich Size
@@ -58,14 +60,16 @@ Elenor Orders a Drink to add into her Order:
 - Enter 1 (For a Coke )
 ![Home screen](images/partEight.jpeg)
 
-Elenor wants chip : 
+Elenor wants chips : 
 - Enter 3 (For chips)
 - Enter 4 (For Lays Baked chips)
 ![Home screen](images/partNine.jpeg)
 
 Elenor want to checkOut
 - Enter 4 (TO complete and see total cost of the many items)
+
 Elenor has the ability to see her Order Summary 
+
 ![Home screen](images/partTen.jpeg)
 
 GRAND DELI sandwich allows Elenor to confirm her order or Cancel it
@@ -73,7 +77,7 @@ GRAND DELI sandwich allows Elenor to confirm her order or Cancel it
 ![Home screen](images/partEleven.jpeg)
 
 - Receipts
-![Home screen](images/partTwelve.jpeg)
+![Home screen](images/PartTwelve.jpeg)
 
 ## Code
 
