@@ -100,11 +100,13 @@ public class RegularTopping extends Topping
     public RegularTopping(String type) {
         super(type);
     }
-    
+
 }
+
 
 public class ExtraCostTopping extends Topping implements ToppingSize
 {
+    
     private int sizeType;
     private String meat;
     private boolean extraMeat;
