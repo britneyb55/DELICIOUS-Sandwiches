@@ -40,7 +40,7 @@ public class SandwichFileManager
             PrintWriter writer = new PrintWriter(fileWriter)
         ) {
 
-            writer.write(" ".repeat(10) + " GRAND DELI  \n");
+            writer.write(" ".repeat(10) + " GRAND DELI Torta Sandwiches  \n");
 
             writer.write(String.format(" Customer: %s \n Order Date: %s \n Order Ready in 15 Min\n", orders.getCustomerName(), orders.getOrderDateTime()));
 
@@ -55,9 +55,10 @@ public class SandwichFileManager
 
                     List<Topping> toppings = sandwich.getInventory();
                     for (Topping topping : toppings) {
-                        if (topping instanceof ExtraCostTopping) {
+                        if (topping instanceof ExtraCostTopping)
+                        {
                             writer.printf(" Extra Meat: %b\n", ((ExtraCostTopping) topping).isExtraMeat());
-                            writer.printf(" Cheese: %b\n", ((ExtraCostTopping) topping).isCheese());
+                            writer.printf(" Cheese: %s\n", ((ExtraCostTopping) topping).isCheese());
                             writer.printf(" Extra Cheese: %b\n", ((ExtraCostTopping) topping).isExtraCheese());
                         }
                         writer.println(" ".repeat(4) + topping);

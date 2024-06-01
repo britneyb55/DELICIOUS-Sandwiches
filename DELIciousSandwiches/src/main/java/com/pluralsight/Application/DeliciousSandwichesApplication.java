@@ -26,6 +26,7 @@ public class DeliciousSandwichesApplication
                     case 1:
                         newOrder();
                     case 0:
+                        System.out.println("Thank you for visiting good bye");
                         return;
                 }
             }
@@ -288,6 +289,7 @@ public class DeliciousSandwichesApplication
 
     private void Confirm(Cashier orders)
     {
+        System.out.println("Thank you for placing your order.");
         SandwichFileManager sandwichFileManager = new SandwichFileManager(orders.getOrderDateTime());
         sandwichFileManager.saveOrder(orders);
 

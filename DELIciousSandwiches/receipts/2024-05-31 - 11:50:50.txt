@@ -1,18 +1,17 @@
-           GRAND DELI  
+           GRAND DELI Torta Sandwiches  
  Customer: Britney 
- Order Date: 2024-05-30 - 10:12:49 
+ Order Date: 2024-05-31 - 11:50:50 
  Order Ready in 15 Min
  Sandwiches:
 
  8'' Steak Sandwich                     $ 12.10 
  Extra Meat: true
- Cheese: true
+ Cheese: American cheese
  Extra Cheese: true
     Toppings:
     Lettuce
     Tomatoes
     guacamole
-    Cucumbers
     mayo
     sauce
  

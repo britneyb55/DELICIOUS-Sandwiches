@@ -1,0 +1,22 @@
+           GRAND DELI Torta Sanwiches  
+ Customer: Britney 
+ Order Date: 2024-05-31 - 08:16:28 
+ Order Ready in 15 Min
+ Sandwiches:
+
+ 8'' Steak Sandwich                     $ 12.10 
+ Extra Meat: true
+ Cheese: American cheese
+ Extra Cheese: true
+    Toppings:
+    Lettuce
+    Tomatoes
+    guacamole
+    mayo
+    sauce
+ 
+ Drink Coke (Size: Medium)                  $ 2.50 
+ 
+ Lays Baked Chips               $ 1.50 
+-------------------------------------------------- 
+ Total :                                 $ 16.1
